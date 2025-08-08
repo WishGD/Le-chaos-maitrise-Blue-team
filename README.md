@@ -23,8 +23,8 @@ Le chaos maitrise-Blue-team
 - Aujourd’hui : Va faire Y.
 - Blocages : Z.
 
-**Membre 4** :
+**Membre 4** : Mokles Sabsabi
 
-- Hier : A fait X.
-- Aujourd’hui : Va faire Y.
-- Blocages : Z.
+- Hier : Ajouter une connexion mongodb cloud a la place de local, Ajouter authentication des pages, travailler et tester next.js, traveiller sur crt certification et socket avec Aamir
+- Aujourd’hui : Finaliser la connexion et les tester en groupes
+- Blocages : Les connexions ne marchent pas a l'externe encore
