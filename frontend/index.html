@@ -1,0 +1,164 @@
+
+ <!DOCTYPE html>
+<html lang="fr" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anomix — Accueil</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>">
+  <style>
+    body { min-height: 100svh; display:flex; flex-direction:column; }
+    main { flex: 1 0 auto; }
+    .brand { height: 40px; }
+    .hero {
+      padding: 4rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg border-bottom" style="background-color:#7C76CE ;">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <!-- <img src="assets/logo.png" alt="Anomix" class="brand"> -->
+        <span class="fw-semibold" style="font-size: xx-large;">🎥Anomix</span>
+      </a>
+
+      <div class="ms-auto d-flex gap-2 align-items-center">
+        <!-- Boutons affichés si NON connecté -->
+        <a data-auth="logged-out" class="btn btn-secondary" href="home.html">Se connecter</a>
+        <a data-auth="logged-out" class="btn btn-dark" href="registre.html">Créer un compte</a>
+
+        <!-- Boutons affichés si connecté -->
+        <span data-auth="logged-in" class="me-1 small text-body-secondary">Connecté en tant que <strong id="navUsername"> — </strong></span>
+        <button data-auth="logged-in" id="logoutBtn" class="btn btn-danger" type="button">Se déconnecter</button>
+
+        <!-- Thème -->
+        <button id="themeToggleBtn" class="btn btn-outline-secondary" type="button">☀️ Clair</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenu -->
+  <main class="container hero">
+    <!-- Section non connecté -->
+    <section data-auth="logged-out" class="text-center">
+      <h1 class="display-5 fw-bold mb-3">Bienvenue sur Anomix</h1>
+      <p class="lead mb-4">
+        Rencontres en temps réel, en un clic. Créez un compte ou connectez-vous pour démarrer.
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        <a class="btn btn-primary btn-lg" href="home.html">Se connecter</a>
+        <a class="btn btn-outline-secondary btn-lg" href="registre.html">Créer un compte</a>
+      </div>
+    </section>
+
+    <!-- Section connecté -->
+    <section data-auth="logged-in" class="text-center">
+      <h1 class="display-6 fw-semibold mb-2">Bonjour, <span id="helloUsername">—</span> 👋</h1>
+      <p class="text-body-secondary mb-4">
+        Prêt(e) à discuter en visio ? Vérifiez votre caméra/micro puis lancez une session.
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a class="btn btn-primary btn-lg" href="test-camera.html">🎥 Tester caméra & micro</a>
+        <a class="btn btn-outline-primary btn-lg" href="test-socket.html">🔌 Tester la connexion Socket</a>
+        <a class="btn btn-outline-primary btn-lg" href="http://localhost:3003/conexion.html">🔌  connexion  </a>
+        <!-- Tu peux pointer ici vers ta page principale de chat -->
+        <!-- <a class="btn btn-success btn-lg" href="chat.html">Démarrer un chat</a> -->
+      </div>
+
+      <div class="card shadow-sm mx-auto mt-5" style="max-width: 720px;">
+        <div class="card-body text-start">
+          <h5 class="card-title">Infos rapides</h5>
+          <ul class="mb-1">
+            <li>Tu peux revenir ici à tout moment depuis le logo «&nbsp;Anomix&nbsp;».</li>
+            <li>Le thème (clair/sombre) est retenu pour toutes les pages.</li>
+            <li>Le bouton <em>Se déconnecter</em> vide le token et te renvoie vers la connexion.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-top py-3 text-center">
+     &copy; 2025 Anomix. Tous droits réservés.
+   
+      
+  </footer>
+
+  <!-- Bootstrap JS (optionnel) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- App logic (thème + auth + API) -->
+  <script>
+    // ===== Détection de la base d’API =====
+    // Si la page est servie depuis le backend (port 3003), on garde la même origine.
+    // Sinon (Live Server / file), on cible http://localhost:3003 pour l’API.
+    window.API_BASE = window.API_BASE ?? (location.port === '3003' ? '' : 'http://localhost:3003');
+
+    // ===== Thème persistant (clair/sombre) =====
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      localStorage.setItem('anomix-theme', theme);
+      themeToggleBtn.textContent = theme === 'dark' ? '🌙 Sombre' : '☀️ Clair';
+      themeToggleBtn.classList.toggle('btn-outline-light', theme === 'dark');
+      themeToggleBtn.classList.toggle('btn-outline-secondary', theme !== 'dark');
+    }
+
+    const savedTheme = localStorage.getItem('anomix-theme') || 'light';
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const next = (localStorage.getItem('anomix-theme') === 'dark') ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    // ===== Gestion de l’état connecté / déconnecté (UI) =====
+    function isLogged() {
+      return !!localStorage.getItem('token') && !!localStorage.getItem('username');
+    }
+
+    function updateAuthUI() {
+      const loggedIn = isLogged();
+      const authEls = document.querySelectorAll('[data-auth]');
+
+      authEls.forEach(el => {
+        const state = el.getAttribute('data-auth');
+        el.style.display = (state === 'logged-in' && loggedIn) || (state === 'logged-out' && !loggedIn)
+          ? '' : 'none';
+      });
+
+      if (loggedIn) {
+        const u = localStorage.getItem('username');
+        const navU = document.getElementById('navUsername');
+        const helloU = document.getElementById('helloUsername');
+        if (navU) navU.textContent = u;
+        if (helloU) helloU.textContent = u;
+      }
+    }
+
+    updateAuthUI();
+
+    // ===== Déconnexion =====
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        updateAuthUI();
+        // Redirection vers la page de connexion
+        location.href = 'home.html';
+      });
+    }
+
+    // (Optionnel) Tu peux vérifier la santé du serveur d’API :
+    // fetch(`${API_BASE}/api/health`).catch(()=>{ /* ignore si hors ligne */ });
+  </script>
+</body>
+</html>
+

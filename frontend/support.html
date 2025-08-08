@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anomix — Support</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+
+  <style>
+    /* ================= Variables de thème ================= */
+    :root{
+      --bg: #f7fafc;
+      --surface: #ffffff;
+      --text: #111827;
+      --muted: #4b5563;
+      --primary: #7c6ee6;
+      --primary-contrast: #ffffff;
+      --ring: rgba(124,110,230,.25);
+      --shadow: 0 10px 25px rgba(15,23,42,.12);
+      --bar: #7c6ee6;
+    }
+    [data-theme="dark"]{
+      --bg: #0f172a;
+      --surface: #111827;
+      --text: #eef2ff;
+      --muted: #cbd5e1;
+      --primary: #8b82ef;
+      --primary-contrast: #ffffff;
+      --ring: rgba(139,130,239,.35);
+      --shadow: 0 12px 32px rgba(0,0,0,.55);
+      --bar: #6f67d8;
+    }
+
+    /* ================= Base ================= */
+    *{ box-sizing: border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    .container{ width: min(1100px, 92vw); margin: 24px auto; }
+
+    /* ================= Top bar ================= */
+    .topbar{
+      background: var(--bar);
+      color: #fff;
+      padding: 14px 0;
+      position: sticky; top:0; z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+    .topbar .wrap{
+      width:min(1100px,92vw); margin:0 auto;
+      display:flex; align-items:center; gap:12px;
+    }
+    .brand{ font-weight: 800; letter-spacing:.2px; font-size: 22px }
+
+    .spacer{ flex:1 }
+
+    .btn{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.55rem .9rem; border-radius:10px;
+      border:1px solid rgba(255,255,255,.25);
+      color:#fff; background:transparent;
+      text-decoration:none; cursor:pointer;
+      transition: .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ background: rgba(255,255,255,.1) }
+    .btn-primary{
+      background: var(--primary);
+      border-color: transparent;
+      color: var(--primary-contrast);
+      box-shadow: 0 6px 16px var(--ring);
+    }
+    .btn-primary:hover{ filter: brightness(1.05) }
+
+    /* ================= Cartes / section ================= */
+    .card{
+      background: var(--surface);
+      border: 1px solid rgba(148,163,184,.18);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 22px 22px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    h1{ margin: 22px 0 10px; font-size: 32px }
+    h2{ margin: 0 0 14px; font-size: 22px }
+    p.lead{ color: var(--muted); margin-top:0 }
+
+    /* ================= FAQ (details/summary) ================= */
+    details{
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      overflow:hidden;
+    }
+    details+details{ margin-top: 12px }
+    summary{
+      cursor: pointer;
+      list-style: none;
+      padding: 14px 16px;
+      font-weight: 600;
+      display:flex; align-items:center; gap:10px;
+      color: var(--text);
+    }
+    summary::-webkit-details-marker{ display:none }
+    .faq-body{
+      padding: 12px 16px 16px;
+      color: var(--muted);
+      border-top: 1px dashed rgba(148,163,184,.35);
+    }
+
+    /* ================= Formulaire ================= */
+    .field{
+      display:flex; flex-direction:column; gap:6px; margin-bottom:12px;
+    }
+    .label{ font-weight:600 }
+    .input, .textarea, select{
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      border: 1px solid rgba(148,163,184,.25);
+      border-radius: 10px;
+      padding: .7rem .9rem;
+      color: var(--text);
+      outline: none;
+      transition: .15s;
+    }
+    .input:focus, .textarea:focus, select:focus{
+      border-color: var(--primary);
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    .textarea{ min-height: 130px; resize: vertical }
+
+    .muted{ color: var(--muted) }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.35rem .65rem; font-size: 12px;
+      background: color-mix(in srgb, var(--primary) 12%, transparent);
+      border:1px solid color-mix(in srgb, var(--primary) 28%, transparent);
+      color: var(--text);
+      border-radius: 999px;
+    }
+
+    .actions{ display:flex; gap:10px; flex-wrap: wrap; align-items:center }
+
+    .notice{
+      background: color-mix(in srgb, #16a34a 12%, transparent);
+      border: 1px solid color-mix(in srgb, #16a34a 28%, transparent);
+      color: var(--text);
+      padding: 10px 12px; border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========= Top bar ========= -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">🎥Anomix</div>
+      <div class="spacer"></div>
+      <a class="btn" href="index.html">↩︎  Retour</a>
+      <button id="themeToggleBtn" class="btn">🌙 Sombre</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Centre de support</h1>
+    <p class="lead">
+      Besoin d’aide ? Consulte notre FAQ, copie des infos de diagnostic ou contacte-nous via le formulaire.
+    </p>
+
+    <div class="grid">
+      <!-- ====== Colonne FAQ ====== -->
+      <section class="card">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>Je n’ai pas d’image ou de son</summary>
+          <div class="faq-body">
+            • Vérifie les permissions du navigateur (icône caméra dans la barre d’adresse).<br/>
+            • Assure-toi qu’aucune autre application n’utilise la caméra / le micro.<br/>
+            • Essaie notre page de test : <a href="test-camera.html">Test caméra & micro</a>.
+          </div>
+        </details>
+
+        <details>
+          <summary>La connexion est instable</summary>
+          <div class="faq-body">
+            • Privilégie le Wi-Fi / Ethernet à une 4G/5G.<br/>
+            • Ferme les autres onglets consommateurs de bande passante.<br/>
+            • Relance la recherche de partenaire avec <span class="pill">Sauter</span>.
+          </div>
+        </details>
+
+        <details>
+          <summary>Erreur “Invalid credentials”</summary>
+          <div class="faq-body">
+            • Vérifie ton identifiant / email et ton mot de passe.<br/>
+            • Si besoin, déconnecte-toi et reconnecte-toi.<br/>
+            • En dernier recours, réinitialise ton mot de passe.
+          </div>
+        </details>
+
+        <details>
+          <summary>Le site ne répond pas</summary>
+          <div class="faq-body">
+            • Si tu utilises un serveur local, assure-toi que <code>http://localhost:3003</code> est bien lancé.<br/>
+            • Regarde le statut dans <em>Diagnostics</em> ci-dessous.
+          </div>
+        </details>
+      </section>
+
+      <!-- ====== Colonne Contact ====== -->
+      <aside class="card">
+        <h2>Nous contacter</h2>
+        <p class="muted">Réponse sous 24–48h ouvrées.</p>
+
+        <form id="supportForm" autocomplete="on" novalidate>
+          <div class="field">
+            <label class="label" for="topic">Sujet</label>
+            <select id="topic" class="input" required>
+              <option value="bug">Bug / Problème technique</option>
+              <option value="billing">Facturation / Compte</option>
+              <option value="feature">Suggestion</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <input id="email" class="input" type="email" placeholder="nom@domaine.com" required />
+          </div>
+
+          <div class="field">
+            <label class="label" for="message">Message</label>
+            <textarea id="message" class="textarea" placeholder="Décris ton souci en précisant les étapes pour le reproduire…" required></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+            <button type="button" id="copyDiagBtn" class="btn">📋 Copier le diagnostic</button>
+            <span id="status" class="muted"></span>
+          </div>
+
+          <p class="notice" style="margin-top:10px">
+            Astuce : joins le diagnostic quand tu nous écris — ça accélère beaucoup la résolution !
+          </p>
+        </form>
+      </aside>
+    </div>
+
+    <!-- Diagnostics -->
+    <section class="card" style="margin-top:22px">
+      <h2>Diagnostics (lecture seule)</h2>
+      <p class="muted" style="margin-top:0">Ces informations techniques nous aident à t’assister.</p>
+      <pre id="diag" style="white-space:pre-wrap; background: color-mix(in srgb, var(--surface) 90%, transparent); border:1px solid rgba(148,163,184,.25); padding:12px; border-radius:10px; overflow:auto; max-height:260px"></pre>
+    </section>
+  </main>
+
+  <footer class="border-top py-3 text-center">
+     &copy; 2025 Anomix. Tous droits réservés.
+   
+      
+  </footer>
+  <script>
+    /* ======================= Thème ======================= */
+    const themeBtn = document.getElementById('themeToggleBtn');
+    function applyTheme(theme){
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('anomix-theme', theme);
+      themeBtn.textContent = theme === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+    }
+    applyTheme(localStorage.getItem('anomix-theme') || 'light');
+    themeBtn.addEventListener('click', () => {
+      const next = (localStorage.getItem('anomix-theme') === 'dark') ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    /* ======================= Diagnostics ======================= */
+    function gatherDiagnostics(){
+      const diag = {
+        date: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        screen: `${window.screen.width}x${window.screen.height} @${window.devicePixelRatio}`,
+        online: navigator.onLine,
+        location: location.href
+      };
+      return JSON.stringify(diag, null, 2);
+    }
+    const diagEl = document.getElementById('diag');
+    diagEl.textContent = gatherDiagnostics();
+
+    document.getElementById('copyDiagBtn').addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(diagEl.textContent);
+        toast('Diagnostic copié dans le presse-papiers ✅');
+      }catch{
+        toast('Impossible de copier. Sélectionne le texte manuellement.');
+      }
+    });
+
+    function toast(msg){
+      const s = document.getElementById('status');
+      s.textContent = msg;
+      setTimeout(()=>s.textContent = '', 3500);
+    }
+
+    /* ======================= Formulaire ======================= */
+    // Tu peux envoyer vers ton API si tu en as une, sinon on ouvre un mail
+    const API_BASE = (location.port === '3003') ? '' : 'http://localhost:3003';
+
+    document.getElementById('supportForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const topic   = document.getElementById('topic').value;
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const diag    = diagEl.textContent;
+
+      // Si tu as un endpoint côté serveur, dé-commente cet envoi :
+      /*
+      try{
+        const res = await fetch(`${API_BASE}/api/support`, {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json' },
+          body: JSON.stringify({ topic, email, message, diagnostics: diag })
+        });
+        if(!res.ok) throw new Error('Échec de l’envoi');
+        toast('Message envoyé ✅');
+        e.target.reset();
+      }catch(err){
+        toast('Erreur réseau. Mail de secours ouvert.');
+        window.location.href = `mailto:support@anomix.com?subject=[Support] ${encodeURIComponent(topic)}&body=${encodeURIComponent(message + '\n\n---\nDiagnostics:\n' + diag)}`;
+      }
+      */
+
+      // Fallback sans backend : ouvre un e-mail prérempli
+      window.location.href =
+        `mailto:support@anomix.com?subject=${encodeURIComponent('[Support] ' + topic)}&body=${encodeURIComponent(message + '\n\n---\nDiagnostics:\n' + diag)}`;
+      toast('Ouverture de votre client mail…');
+    });
+  </script>
+</body>
+</html>
