@@ -17,11 +17,11 @@ Le chaos maitrise-Blue-team
 - Aujourd’hui : Va faire fonctionner le projet pour permettre aux users de sign up et sign in from online.
 - Blocages : Les CRTs ne semblent pas encore nous permettre de nous connecter à distance sur la plateforme, donc on va devoir faire des changements pour autoriser la création de compte à distance.
 
-**Membre 3** :
+**Membre 3** : Abderrafie Saber
 
 - Hier : A fait j'ai applémenté le dark mode global (toggle + persistance localstorage) .
-- Aujourd’hui : je fais la déconnexion global (vider localstorage + rediger vers index.html).
-- Blocages : aucun majeur .
+- Aujourd’hui : Va faire, la déconnexion global (vider localstorage + rediger vers index.html).
+- Blocages : aucun  .
 
 **Membre 4** : Mokles Sabsabi
 
