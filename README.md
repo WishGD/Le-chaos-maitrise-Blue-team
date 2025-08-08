@@ -19,9 +19,9 @@ Le chaos maitrise-Blue-team
 
 **Membre 3** :
 
-- Hier : A fait X.
-- Aujourd’hui : Va faire Y.
-- Blocages : Z.
+- Hier : A fait j'ai applémenté le dark mode global (toggle + persistance localstorage) .
+- Aujourd’hui : je fais la déconnexion global (vider localstorage + rediger vers index.html).
+- Blocages : aucun majeur .
 
 **Membre 4** : Mokles Sabsabi
 
